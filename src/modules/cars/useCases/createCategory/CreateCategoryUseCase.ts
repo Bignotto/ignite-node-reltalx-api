@@ -1,4 +1,5 @@
 import { Category } from '../../model/Category';
+import { CategoryRepository } from '../../repositories/implementations/CategoryRepository';
 
 interface IRequest {
   name: string;
@@ -6,11 +7,10 @@ interface IRequest {
 }
 
 class CreateCategoryUseCase {
-  execute({ name, description }:IRequest): Category {
-    const newCategory = new Category();
-    Object.assign(newCategory, { name, description });
+  constructor(private categoryRepository: CategoryRepository) {}
 
-    // use repository
+  execute({ name, description }:IRequest): Category {
+    const newCategory = this.categoryRepository.create({ name, description });
 
     return newCategory;
   }
