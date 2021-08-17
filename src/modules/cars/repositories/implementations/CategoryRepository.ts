@@ -1,5 +1,8 @@
-import { Category } from '../../model/Category';
-import { ICategoriesRepository, ICreateCategoryDTO } from '../ICategoryRepository';
+import { Category } from "../../model/Category";
+import {
+  ICategoriesRepository,
+  ICreateCategoryDTO,
+} from "../ICategoryRepository";
 
 class CategoryRepository implements ICategoriesRepository {
   private categoriesData: Category[];
@@ -17,7 +20,7 @@ class CategoryRepository implements ICategoriesRepository {
     return CategoryRepository.INSTANCE;
   }
 
-  create({ name, description }:ICreateCategoryDTO):Category {
+  create({ name, description }: ICreateCategoryDTO): Category {
     const newCategory = new Category();
     Object.assign(newCategory, { name, description });
 
@@ -25,17 +28,17 @@ class CategoryRepository implements ICategoriesRepository {
     return newCategory;
   }
 
-  findById(id:string): Category | undefined {
+  findById(id: string): Category | undefined {
     const found = this.categoriesData.find((cat) => cat.id === id);
     return found;
   }
 
-  findByName(name:string): Category | undefined {
+  findByName(name: string): Category | undefined {
     const found = this.categoriesData.find((cat) => cat.name === name);
     return found;
   }
 
-  list():Category[] {
+  list(): Category[] {
     return this.categoriesData;
   }
 }
