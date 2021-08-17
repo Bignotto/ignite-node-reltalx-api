@@ -1,8 +1,6 @@
-import { Request, Response } from 'express';
+import { Request, Response } from "express";
 
-import { CreateCategoryUseCase } from './CreateCategoryUseCase';
-
-// import usecase
+import { CreateCategoryUseCase } from "./CreateCategoryUseCase";
 
 class CreateCategoryController {
   constructor(private createCategoryUseCase: CreateCategoryUseCase) {}
@@ -11,15 +9,18 @@ class CreateCategoryController {
     const { name, description } = request.body;
 
     try {
-      const category = this.createCategoryUseCase.execute({ name, description });
+      const category = this.createCategoryUseCase.execute({
+        name,
+        description,
+      });
       return response.status(200).json({
-        where: 'CreateCategoryController',
-        funct: 'handle',
+        where: "CreateCategoryController",
+        funct: "handle",
         got: category,
       });
     } catch (error) {
       return response.status(501).json({
-        error: 'something went wrong',
+        error: "something went wrong",
       });
     }
   }
