@@ -1,0 +1,47 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Ignite Challenge 04: SOLID practice",
+    "description": "Practice SOLID code principles.",
+    "version": "1.0.0",
+    "contact": "bignotto@gmail.com"
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create a new User",
+        "description": "Add new user to database.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Dunha Cunha",
+                  "email": "dunha@gmail.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "User email already in use."
+          }
+        }
+      }
+    }
+  }
+}
