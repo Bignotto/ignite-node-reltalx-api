@@ -1,5 +1,5 @@
-import { Specification } from '../../model/Specification';
-import { SpecificationRepository } from '../../repositories/implementations/SpecificationRepository';
+import { Specification } from "../../model/Specification";
+import { SpecificationRepository } from "../../repositories/implementations/SpecificationRepository";
 
 interface IRequest {
   name: string;
@@ -9,8 +9,11 @@ interface IRequest {
 class CreateSpecificationUseCase {
   constructor(private specificationRepository: SpecificationRepository) {}
 
-  execute({ name, description }:IRequest): Specification {
-    const newSpecification = this.specificationRepository.create({ name, description });
+  execute({ name, description }: IRequest): Specification {
+    const newSpecification = this.specificationRepository.create({
+      name,
+      description,
+    });
 
     return newSpecification;
   }

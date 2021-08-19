@@ -7,11 +7,11 @@
     "contact": "bignotto@gmail.com"
   },
   "paths": {
-    "/users": {
+    "/categories": {
       "post": {
-        "tags": ["Users"],
-        "summary": "Create a new User",
-        "description": "Add new user to database.",
+        "tags": ["Cars","Categories"],
+        "summary": "Create a new car category",
+        "description": "Add new car category on database.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -21,13 +21,13 @@
                   "name": {
                     "type": "string"
                   },
-                  "email": {
+                  "description": {
                     "type": "string"
                   }
                 },
                 "example": {
-                  "name": "Dunha Cunha",
-                  "email": "dunha@gmail.com"
+                  "name": "SUV",
+                  "description": "Super Ultra Vehicle(tm)"
                 }
               }
             }
@@ -38,7 +38,7 @@
             "description": "Created"
           },
           "400": {
-            "description": "User email already in use."
+            "description": "Duplicated"
           }
         }
       }
