@@ -1,0 +1,47 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Ignite Challenge 04: SOLID practice",
+    "description": "Practice SOLID code principles.",
+    "version": "1.0.0",
+    "contact": "bignotto@gmail.com"
+  },
+  "paths": {
+    "/categories": {
+      "post": {
+        "tags": ["Cars","Categories"],
+        "summary": "Create a new car category",
+        "description": "Add new car category on database.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "SUV",
+                  "description": "Super Ultra Vehicle(tm)"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Duplicated"
+          }
+        }
+      }
+    }
+  }
+}
