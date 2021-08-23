@@ -9,8 +9,11 @@ interface IRequest {
 class CreateCategoryUseCase {
   constructor(private categoryRepository: ICategoriesRepository) {}
 
-  execute({ name, description }: IRequest): Category {
-    const newCategory = this.categoryRepository.create({ name, description });
+  async execute({ name, description }: IRequest): Promise<Category> {
+    const newCategory = await this.categoryRepository.create({
+      name,
+      description,
+    });
 
     return newCategory;
   }
