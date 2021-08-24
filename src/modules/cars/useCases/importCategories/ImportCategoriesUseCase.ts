@@ -38,9 +38,9 @@ class ImportCategoriesUseCase {
 
     categories.map(async (newCatetogy) => {
       const { name, description } = newCatetogy;
-      const foundCategory = this.categoryRepository.findByName(name);
+      const foundCategory = await this.categoryRepository.findByName(name);
       if (!foundCategory)
-        this.categoryRepository.create({
+        await this.categoryRepository.create({
           name,
           description,
         });

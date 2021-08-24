@@ -32,7 +32,7 @@ class CategoryRepository implements ICategoriesRepository {
   }
 
   async list(): Promise<Category[]> {
-    const categoriesList = this.repository.find();
+    const categoriesList = await this.repository.find();
     return categoriesList;
   }
 }
