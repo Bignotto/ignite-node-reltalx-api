@@ -1,21 +1,21 @@
-import { Request, Response } from 'express';
+import { Request, Response } from "express";
 
-import { ListCategoriesUseCase } from './ListCategoriesUseCase';
+import { ListCategoriesUseCase } from "./ListCategoriesUseCase";
 
 class ListCategoriesController {
   constructor(private listCategoriesUseCase: ListCategoriesUseCase) {}
 
-  handle(request:Request, response:Response): Response {
+  async handle(request: Request, response: Response): Promise<Response> {
     try {
-      const categories = this.listCategoriesUseCase.execute();
+      const categories = await this.listCategoriesUseCase.execute();
       return response.status(200).json({
-        where: 'CreateCategoryController',
-        funct: 'handle',
+        where: "CreateCategoryController",
+        funct: "handle",
         got: categories,
       });
     } catch (error) {
       return response.status(501).json({
-        error: 'something went wrong',
+        error: "something went wrong",
       });
     }
   }
