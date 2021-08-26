@@ -1,3 +1,5 @@
+import { getRepository, Repository } from "typeorm";
+
 import { Specification } from "../../entities/Specification";
 import {
   ISpecificationRepository,
@@ -5,41 +7,36 @@ import {
 } from "../ISpecificationRepository";
 
 class SpecificationRepository implements ISpecificationRepository {
-  private specificationsData: Specification[];
-
-  private static INSTANCE: SpecificationRepository;
+  private repository: Repository<Specification>;
 
   constructor() {
-    this.specificationsData = [];
+    this.repository = getRepository(Specification);
   }
 
-  public static getInstance(): SpecificationRepository {
-    if (!SpecificationRepository.INSTANCE) {
-      SpecificationRepository.INSTANCE = new SpecificationRepository();
-    }
-    return SpecificationRepository.INSTANCE;
-  }
+  async create({
+    name,
+    description,
+  }: ICreateSpecificationDTO): Promise<Specification> {
+    const newSpecification = this.repository.create({ name, description });
 
-  create({ name, description }: ICreateSpecificationDTO): Specification {
-    const newSpecification = new Specification();
-    Object.assign(newSpecification, { name, description });
+    await this.repository.save(newSpecification);
 
-    this.specificationsData.push(newSpecification);
     return newSpecification;
   }
 
-  findById(id: string): Specification | undefined {
-    const found = this.specificationsData.find((cat) => cat.id === id);
+  async findById(id: string): Promise<Specification> {
+    const found = await this.repository.findOne({ id });
     return found;
   }
 
-  findByName(name: string): Specification | undefined {
-    const found = this.specificationsData.find((cat) => cat.name === name);
+  async findByName(name: string): Promise<Specification> {
+    const found = await this.repository.findOne({ name });
     return found;
   }
 
-  list(): Specification[] {
-    return this.specificationsData;
+  async list(): Promise<Specification[]> {
+    const categoriesList = await this.repository.find();
+    return categoriesList;
   }
 }
 

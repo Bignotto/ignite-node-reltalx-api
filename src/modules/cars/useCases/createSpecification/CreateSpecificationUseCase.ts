@@ -15,8 +15,8 @@ class CreateSpecificationUseCase {
     private specificationRepository: SpecificationRepository
   ) {}
 
-  execute({ name, description }: IRequest): Specification {
-    const newSpecification = this.specificationRepository.create({
+  async execute({ name, description }: IRequest): Promise<Specification> {
+    const newSpecification = await this.specificationRepository.create({
       name,
       description,
     });
