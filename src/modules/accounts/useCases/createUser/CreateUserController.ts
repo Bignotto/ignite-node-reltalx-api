@@ -20,7 +20,7 @@ class CreateUserController {
 
       return response.status(201).json(user);
     } catch (error) {
-      return response.status(501).json({
+      return response.status(500).json({
         where: "CreateUserController",
         message: "use case execute error",
         error,
