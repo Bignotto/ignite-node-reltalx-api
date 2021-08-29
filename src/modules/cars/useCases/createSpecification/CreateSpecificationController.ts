@@ -16,7 +16,7 @@ class CreateSpecificationController {
         name,
         description,
       });
-      return response.status(200).json({
+      return response.status(201).json({
         where: "CreateSpecificationController",
         funct: "handle",
         got: category,
