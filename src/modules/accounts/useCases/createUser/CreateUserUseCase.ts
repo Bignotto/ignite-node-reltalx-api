@@ -20,7 +20,8 @@ class CreateUserUseCase {
     password,
     driver_license,
   }: ICreateUserDTO): Promise<User> {
-    const found = this.usersRepository.findByEmail(email);
+    const found = await this.usersRepository.findByEmail(email);
+
     if (found) throw new Error("E-Mail address already in use.");
 
     const hashedPassword = await hash(password, 8);
