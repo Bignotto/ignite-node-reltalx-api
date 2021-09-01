@@ -9,15 +9,11 @@ export class CreateUsersTable1630055391471 implements MigrationInterface {
           {
             name: "id",
             type: "uuid",
+            isPrimary: true,
           },
           {
             name: "name",
             type: "varchar",
-          },
-          {
-            name: "username",
-            type: "varchar",
-            isUnique: true,
           },
           {
             name: "password",
@@ -26,6 +22,7 @@ export class CreateUsersTable1630055391471 implements MigrationInterface {
           {
             name: "email",
             type: "varchar",
+            isUnique: true,
           },
           {
             name: "driver_license",
