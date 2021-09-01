@@ -1,6 +1,7 @@
 import express from "express";
 import swaggerUi from "swagger-ui-express";
 
+import { authRoutes } from "./routes/authentication.routes";
 import { categoryRoutes } from "./routes/categories.routes";
 import { specificationRoutes } from "./routes/specifications.routes";
 import { usersRoutes } from "./routes/users.routes";
@@ -14,9 +15,10 @@ const app = express();
 app.use(express.json());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
+app.use(authRoutes);
+app.use(usersRoutes);
 app.use(categoryRoutes);
 app.use(specificationRoutes);
-app.use(usersRoutes);
 
 app.use("/", (request, response) =>
   response.status(200).json({
