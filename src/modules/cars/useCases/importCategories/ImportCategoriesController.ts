@@ -8,8 +8,8 @@ class ImportCategoriesController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { file } = request;
 
-    await this.importCategoriesUseCase.execute(file);
-    return response.status(200).send();
+    const importedCategories = await this.importCategoriesUseCase.execute(file);
+    return response.status(200).json(importedCategories);
   }
 }
 
