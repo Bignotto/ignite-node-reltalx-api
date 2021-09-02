@@ -2,11 +2,13 @@ import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 
 import { UsersRepository } from "../modules/accounts/repositories/implementations/UsersRepository";
+import { AppError } from "../shared/errors/AppError";
 
 interface IPayload {
   sub: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export async function ensureAuthenticated(
   request: Request,
   response: Response,
@@ -14,7 +16,7 @@ export async function ensureAuthenticated(
 ) {
   const authHeader = request.headers.authorization;
 
-  if (!authHeader) throw new Error("Missing token.");
+  if (!authHeader) throw new AppError("Missing token.");
 
   const [, token] = authHeader.split(" ");
 
@@ -26,10 +28,10 @@ export async function ensureAuthenticated(
 
     const usersRepository = new UsersRepository();
     const user = await usersRepository.findById(user_id);
-    if (!user) throw new Error("User invalid credentials.");
+    if (!user) throw new AppError("User invalid credentials.");
 
     next();
   } catch (error) {
-    throw new Error("Wierd authorization");
+    throw new AppError("Wierd authorization");
   }
 }
