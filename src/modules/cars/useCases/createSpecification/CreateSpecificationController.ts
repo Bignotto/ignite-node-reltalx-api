@@ -11,21 +11,11 @@ class CreateSpecificationController {
       CreateSpecificationUseCase
     );
 
-    try {
-      const category = await createSpecificationUseCase.execute({
-        name,
-        description,
-      });
-      return response.status(201).json({
-        where: "CreateSpecificationController",
-        funct: "handle",
-        got: category,
-      });
-    } catch (error) {
-      return response.status(501).json({
-        error: "something went wrong",
-      });
-    }
+    const specification = await createSpecificationUseCase.execute({
+      name,
+      description,
+    });
+    return response.status(201).json(specification);
   }
 }
 
