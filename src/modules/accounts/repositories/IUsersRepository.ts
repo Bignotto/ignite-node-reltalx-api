@@ -5,10 +5,13 @@ interface ICreateUserDTO {
   password: string;
   email: string;
   driver_license: string;
+  avatar?: string;
+  id?: string;
 }
 
 interface IUsersRepository {
   create(data: ICreateUserDTO): Promise<User>;
+  update(updatedUser: User): Promise<User>;
   list(): Promise<User[]>;
   findByEmail(email: string): Promise<User>;
   findById(id: string): Promise<User>;
