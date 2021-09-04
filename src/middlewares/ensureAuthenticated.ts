@@ -30,6 +30,10 @@ export async function ensureAuthenticated(
     const user = await usersRepository.findById(user_id);
     if (!user) throw new AppError("User invalid credentials.");
 
+    request.user = {
+      id: user_id,
+    };
+
     next();
   } catch (error) {
     throw new AppError("Wierd authorization");
