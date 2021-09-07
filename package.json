@@ -8,13 +8,16 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules --respawn src/index.ts",
-    "typeorm": "ts-node-dev ./node_modules/typeorm/cli"
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli",
+    "test": "jest"
   },
   "dependencies": {
+    "@types/jest": "^27.0.1",
     "bcrypt": "^5.0.1",
     "csv-parse": "^4.16.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
+    "jest": "^27.1.0",
     "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.3",
     "pg": "^8.7.1",
@@ -41,6 +44,7 @@
     "eslint-plugin-import-helpers": "^1.1.0",
     "eslint-plugin-prettier": "^3.4.0",
     "prettier": "^2.3.2",
+    "ts-jest": "^27.0.5",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.3.5"
   }

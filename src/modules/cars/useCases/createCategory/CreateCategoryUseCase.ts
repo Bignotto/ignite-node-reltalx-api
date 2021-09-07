@@ -1,7 +1,8 @@
 import { inject, injectable } from "tsyringe";
 
+import { AppError } from "../../../../shared/errors/AppError";
 import { Category } from "../../entities/Category";
-import { CategoriesRepository } from "../../repositories/implementations/CategoriesRepository";
+import { ICategoriesRepository } from "../../repositories/ICategoriesRepository";
 
 interface IRequest {
   name: string;
@@ -12,10 +13,13 @@ interface IRequest {
 class CreateCategoryUseCase {
   constructor(
     @inject("CategoriesRepository")
-    private categoryRepository: CategoriesRepository
+    private categoryRepository: ICategoriesRepository
   ) {}
 
   async execute({ name, description }: IRequest): Promise<Category> {
+    const found = await this.categoryRepository.findByName(name);
+    if (found) throw new AppError("Category already exists.", 400);
+
     const newCategory = await this.categoryRepository.create({
       name,
       description,
