@@ -2,14 +2,15 @@ import express, { Request, Response } from "express";
 import swaggerUi from "swagger-ui-express";
 import "express-async-errors";
 
+import { AppError } from "@shared/errors/AppError";
+
+import swaggerFile from "../../../swagger.json";
 import { authRoutes } from "./routes/authentication.routes";
 import { categoryRoutes } from "./routes/categories.routes";
 import { specificationRoutes } from "./routes/specifications.routes";
 import { usersRoutes } from "./routes/users.routes";
-import { AppError } from "./shared/errors/AppError";
-import swaggerFile from "./swagger.json";
 
-import "./database";
+import "@shared/infra/typeorm";
 import "@shared/container";
 
 const app = express();
