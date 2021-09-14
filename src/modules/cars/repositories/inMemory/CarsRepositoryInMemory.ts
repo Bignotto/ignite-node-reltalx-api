@@ -1,17 +1,12 @@
-import { inject, injectable } from "tsyringe";
-
 import { ICreateCarDTO } from "@modules/cars/dtos/ICreateCarDTO";
 import { Car } from "@modules/cars/infra/typeorm/entities/Car";
-import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 
-@injectable()
-class CreateCarUseCase {
-  constructor(
-    @inject("CarsRepository")
-    private carsRepository: ICarsRepository
-  ) {}
+import { ICarsRepository } from "../ICarsRepository";
 
-  async execute({
+class CarsRepositoryInMemory implements ICarsRepository {
+  cars: Car[] = [];
+
+  create({
     name,
     description,
     daily_rate,
@@ -20,7 +15,9 @@ class CreateCarUseCase {
     brand,
     category_id,
   }: ICreateCarDTO): Promise<Car> {
-    const newCar = await this.carsRepository.create({
+    const car = new Car();
+
+    Object.assign(car, {
       name,
       description,
       daily_rate,
@@ -30,8 +27,9 @@ class CreateCarUseCase {
       category_id,
     });
 
-    return newCar;
+    this.cars.push(car);
+    return Promise.resolve(car);
   }
 }
 
-export { CreateCarUseCase };
+export { CarsRepositoryInMemory };
