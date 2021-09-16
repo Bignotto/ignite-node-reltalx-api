@@ -3,6 +3,7 @@ import { inject, injectable } from "tsyringe";
 import { ICreateCarDTO } from "@modules/cars/dtos/ICreateCarDTO";
 import { Car } from "@modules/cars/infra/typeorm/entities/Car";
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
+import { AppError } from "@shared/errors/AppError";
 
 @injectable()
 class CreateCarUseCase {
@@ -20,6 +21,9 @@ class CreateCarUseCase {
     brand,
     category_id,
   }: ICreateCarDTO): Promise<Car> {
+    const found = await this.carsRepository.findByLicensePlate(license_plate);
+    if (found) throw new AppError("Duplicated license plate.", 400);
+
     const newCar = await this.carsRepository.create({
       name,
       description,
