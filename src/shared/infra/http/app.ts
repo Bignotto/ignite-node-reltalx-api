@@ -4,6 +4,7 @@ import swaggerUi from "swagger-ui-express";
 import "express-async-errors";
 
 import { AppError } from "@shared/errors/AppError";
+import createConnection from "@shared/infra/typeorm";
 
 import swaggerFile from "../../../swagger.json";
 import { authRoutes } from "./routes/authentication.routes";
@@ -12,8 +13,9 @@ import { categoryRoutes } from "./routes/categories.routes";
 import { specificationRoutes } from "./routes/specifications.routes";
 import { usersRoutes } from "./routes/users.routes";
 
-import "@shared/infra/typeorm";
 import "@shared/container";
+
+createConnection();
 
 const app = express();
 
