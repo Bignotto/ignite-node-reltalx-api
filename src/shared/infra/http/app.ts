@@ -1,4 +1,5 @@
-import express, { Request, Response } from "express";
+import "reflect-metadata";
+import express, { NextFunction, Request, Response } from "express";
 import swaggerUi from "swagger-ui-express";
 import "express-async-errors";
 
@@ -6,6 +7,7 @@ import { AppError } from "@shared/errors/AppError";
 
 import swaggerFile from "../../../swagger.json";
 import { authRoutes } from "./routes/authentication.routes";
+import { carRoutes } from "./routes/cars.routes";
 import { categoryRoutes } from "./routes/categories.routes";
 import { specificationRoutes } from "./routes/specifications.routes";
 import { usersRoutes } from "./routes/users.routes";
@@ -22,6 +24,7 @@ app.use(authRoutes);
 app.use(usersRoutes);
 app.use(categoryRoutes);
 app.use(specificationRoutes);
+app.use(carRoutes);
 
 app.get("/", (request, response) =>
   response.status(200).json({
@@ -32,16 +35,19 @@ app.get("/", (request, response) =>
   })
 );
 
-app.use((err: Error, request: Request, response: Response) => {
-  if (err instanceof AppError) {
-    return response.status(err.statusCode).json({
-      message: err.message,
+app.use(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  (err: Error, request: Request, response: Response, next: NextFunction) => {
+    if (err instanceof AppError) {
+      return response.status(err.statusCode).json({
+        message: err.message,
+      });
+    }
+    return response.status(500).json({
+      status: "error",
+      message: `Internal server error - ${err.message}`,
     });
   }
-  return response.status(500).json({
-    status: "error",
-    message: `Internal server error - ${err.message}`,
-  });
-});
+);
 
 export { app };
