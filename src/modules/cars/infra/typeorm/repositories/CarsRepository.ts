@@ -13,7 +13,6 @@ class CarsRepository implements ICarsRepository {
   }
 
   async create(data: ICreateCarDTO): Promise<Car> {
-    console.log("create car repository");
     const {
       name,
       brand,
