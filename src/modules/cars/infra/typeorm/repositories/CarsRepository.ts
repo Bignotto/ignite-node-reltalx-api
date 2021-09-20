@@ -48,8 +48,14 @@ class CarsRepository implements ICarsRepository {
     return carList;
   }
 
-  async findAvailable(): Promise<Car[]> {
-    throw new Error("Method not implemented.");
+  async findAvailable(
+    brand?: string,
+    category_id?: string,
+    name?: string
+  ): Promise<Car[]> {
+    console.log({ brand, category_id, name });
+    const cars = await this.list();
+    return cars;
   }
 }
 
