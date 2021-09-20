@@ -42,6 +42,15 @@ class CarsRepository implements ICarsRepository {
     const found = await this.repository.findOne({ license_plate });
     return found;
   }
+
+  async list(): Promise<Car[]> {
+    const carList = await this.repository.query("SELECT * FROM cars");
+    return carList;
+  }
+
+  async findAvailable(): Promise<Car[]> {
+    throw new Error("Method not implemented.");
+  }
 }
 
 export { CarsRepository };
