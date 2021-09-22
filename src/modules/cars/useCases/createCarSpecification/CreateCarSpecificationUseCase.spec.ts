@@ -56,4 +56,6 @@ describe("Create Car Specification", () => {
     expect(specificationsCars).toHaveProperty("specifications");
     expect(specificationsCars.specifications.length).toBe(1);
   });
+  // TODO: add a new specification to a car with already some specifications
+  // TODO: remove a car specification
 });
