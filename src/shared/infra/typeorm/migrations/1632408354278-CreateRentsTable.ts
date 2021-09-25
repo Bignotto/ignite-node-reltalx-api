@@ -43,6 +43,11 @@ export class CreateRentsTable1632408354278 implements MigrationInterface {
             type: "timestamp",
             default: "now()",
           },
+          {
+            name: "total",
+            type: "numeric",
+            isNullable: true,
+          },
         ],
         foreignKeys: [
           {

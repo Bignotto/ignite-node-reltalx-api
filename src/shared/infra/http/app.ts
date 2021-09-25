@@ -14,6 +14,7 @@ import { specificationRoutes } from "./routes/specifications.routes";
 import { usersRoutes } from "./routes/users.routes";
 
 import "@shared/container";
+import { rentalsRoutes } from "./routes/rental.routes";
 
 createConnection();
 
@@ -27,6 +28,7 @@ app.use(usersRoutes);
 app.use(categoryRoutes);
 app.use(specificationRoutes);
 app.use(carRoutes);
+app.use(rentalsRoutes);
 
 app.get("/", (request, response) =>
   response.status(200).json({
