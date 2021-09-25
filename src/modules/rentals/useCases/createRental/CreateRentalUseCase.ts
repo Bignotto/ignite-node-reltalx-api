@@ -1,12 +1,9 @@
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
 import { inject, injectable } from "tsyringe";
 
 import { Rental } from "@modules/rentals/infra/typeorm/entities/Rental";
 import { IRentalRepository } from "@modules/rentals/repositories/IRentalRepository";
+import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
 import { AppError } from "@shared/errors/AppError";
-
-dayjs.extend(utc);
 
 interface IRequest {
   car_id: string;
@@ -18,7 +15,8 @@ interface IRequest {
 class CreateRentalUseCase {
   constructor(
     // @inject("RentalsRepository")
-    private rentalsRepository: IRentalRepository
+    private rentalsRepository: IRentalRepository,
+    private dateProvider: IDateProvider
   ) {}
 
   async execute({
@@ -36,13 +34,10 @@ class CreateRentalUseCase {
     );
     if (unavailable_user) throw new AppError("User has open rental");
 
-    const formatted_return_date = dayjs(expected_return_date)
-      .utc()
-      .local()
-      .format();
-    const date_now = dayjs().utc().local().format();
-
-    const compare = dayjs(formatted_return_date).diff(date_now, "hours");
+    const compare = this.dateProvider.hourDiff(
+      expected_return_date,
+      new Date()
+    );
     if (compare < 24) throw new AppError("Less than 24h");
 
     const rental = this.rentalsRepository.create(
