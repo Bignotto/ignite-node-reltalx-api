@@ -10,11 +10,11 @@ import swaggerFile from "../../../swagger.json";
 import { authRoutes } from "./routes/authentication.routes";
 import { carRoutes } from "./routes/cars.routes";
 import { categoryRoutes } from "./routes/categories.routes";
+import { rentalsRoutes } from "./routes/rental.routes";
 import { specificationRoutes } from "./routes/specifications.routes";
 import { usersRoutes } from "./routes/users.routes";
 
 import "@shared/container";
-import { rentalsRoutes } from "./routes/rental.routes";
 
 createConnection();
 
