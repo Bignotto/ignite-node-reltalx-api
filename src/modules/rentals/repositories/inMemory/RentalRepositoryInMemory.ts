@@ -11,10 +11,12 @@ class RentalRepositoryInMemory implements IRentalRepository {
     expected_return_date: Date
   ): Promise<Rental> {
     const newRental = new Rental();
+    const start_date = new Date();
     Object.assign(newRental, {
       car_id,
       user_id,
       expected_return_date,
+      start_date,
     });
 
     this.rentals.push(newRental);
