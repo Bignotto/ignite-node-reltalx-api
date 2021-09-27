@@ -11,6 +11,7 @@ interface ICarsRepository {
     category_id?: string
   ): Promise<Car[]>;
   findById(id: string): Promise<Car>;
+  updateAvailable(id: string, value: boolean): Promise<void>;
 }
 
 export { ICarsRepository };
