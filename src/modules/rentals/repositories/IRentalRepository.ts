@@ -4,7 +4,10 @@ interface IRentalRepository {
   create(
     car_id: string,
     user_id: string,
-    expected_return_date: Date
+    expected_return_date: Date,
+    id?: string,
+    end_date?: Date,
+    total?: number
   ): Promise<Rental>;
   findById(id: string): Promise<Rental>;
   findOpenByCarId(car_id: string): Promise<Rental>;

@@ -26,6 +26,8 @@ class RentalCheckoutUseCase {
 
   async execute({ rental_id, user_id }: IRequest): Promise<Rental> {
     let days = 0;
+    let total = 0;
+
     const rental = await this.rentalsRepository.findById(rental_id);
     if (!rental) throw new AppError("Rental not found.");
 
@@ -50,14 +52,25 @@ class RentalCheckoutUseCase {
     if (compare === 0) days = 1;
     else days = compare;
 
+    total = days * car.daily_rate;
+
     const delay = this.dateProvider.daysDiff(
       rental.expected_return_date,
       today
     );
+    if (delay > 0) total += delay * car.fine_amount;
 
-    console.log({ days, delay });
-
-    return rental;
+    // TODO: create DTO for rental creation
+    const chekcout_rental = await this.rentalsRepository.create(
+      rental.car_id,
+      rental.user_id,
+      rental.expected_return_date,
+      rental.id,
+      today,
+      total
+    );
+    return chekcout_rental;
+    // return rental;
   }
 }
 

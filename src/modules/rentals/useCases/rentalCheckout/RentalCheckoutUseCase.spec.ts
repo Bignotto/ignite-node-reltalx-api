@@ -1,4 +1,3 @@
-import { Car } from "@modules/cars/infra/typeorm/entities/Car";
 import { CarsRepositoryInMemory } from "@modules/cars/repositories/inMemory/CarsRepositoryInMemory";
 import { RentalRepositoryInMemory } from "@modules/rentals/repositories/inMemory/RentalRepositoryInMemory";
 import { DayjsDateProvider } from "@shared/container/providers/DateProvider/implementations/DayjsDateProvider";
@@ -9,7 +8,6 @@ let rentalCheckOut: RentalCheckoutUseCase;
 let rentalsRepository: RentalRepositoryInMemory;
 let carsRepository: CarsRepositoryInMemory;
 let dateProvider: DayjsDateProvider;
-let car: Car;
 
 describe("Rental Checkout Use Case", () => {
   beforeEach(async () => {
@@ -24,15 +22,22 @@ describe("Rental Checkout Use Case", () => {
     );
   });
 
-  it("should be ok", () => {
-    expect(true).toBe(true);
-  });
-
   it("should be able to return a rental", async () => {
+    const today = dateProvider.now();
+    const car = await carsRepository.create({
+      brand: "test",
+      category_id: "idididididi",
+      daily_rate: 10,
+      description: "test car",
+      fine_amount: 5,
+      license_plate: "xpty25",
+      name: "kwid",
+    });
+
     const rental = await rentalsRepository.create(
-      "cacacacacac",
+      car.id,
       "ususususus",
-      new Date(dateProvider.addDays(dateProvider.now(), 2))
+      new Date(dateProvider.addDays(today, 2))
     );
 
     const result = await rentalCheckOut.execute({
@@ -40,6 +45,6 @@ describe("Rental Checkout Use Case", () => {
       user_id: "ususususus",
     });
 
-    console.log({ result });
+    expect(result.end_date).not.toBe(null);
   });
 });
