@@ -41,8 +41,8 @@ class CreateRentalUseCase {
     if (unavailable_user) throw new AppError("User has open rental");
 
     const compare = this.dateProvider.hourDiff(
-      expected_return_date,
-      new Date()
+      new Date(),
+      expected_return_date
     );
     if (compare < 24) throw new AppError("Less than 24h");
 

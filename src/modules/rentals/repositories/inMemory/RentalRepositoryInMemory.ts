@@ -8,13 +8,21 @@ class RentalRepositoryInMemory implements IRentalRepository {
   async create(
     car_id: string,
     user_id: string,
-    expected_return_date: Date
+    expected_return_date: Date,
+    id?: string,
+    end_date?: Date,
+    total?: number
   ): Promise<Rental> {
     const newRental = new Rental();
+    const start_date = new Date();
     Object.assign(newRental, {
       car_id,
       user_id,
       expected_return_date,
+      start_date,
+      id,
+      end_date,
+      total,
     });
 
     this.rentals.push(newRental);
