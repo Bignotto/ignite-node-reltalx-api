@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Ignite Challenge 04: SOLID practice",
-    "description": "Practice SOLID code principles.",
+    "title": "Ignite NodeJS Track",
+    "description": "RentalX, car rental API.",
     "version": "1.0.0",
     "contact": "bignotto@gmail.com"
   },
