@@ -71,7 +71,6 @@ class RentalCheckoutUseCase {
     );
     await this.carsRepository.updateAvailable(rental.car_id, true);
     return chekcout_rental;
-    // return rental;
   }
 }
 

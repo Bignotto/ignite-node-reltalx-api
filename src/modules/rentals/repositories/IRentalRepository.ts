@@ -12,6 +12,7 @@ interface IRentalRepository {
   findById(id: string): Promise<Rental>;
   findOpenByCarId(car_id: string): Promise<Rental>;
   findOpenByUserId(user_id: string): Promise<Rental>;
+  findByUserId(user_id: string);
 }
 
 export { IRentalRepository };
