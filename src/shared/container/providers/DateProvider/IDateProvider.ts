@@ -4,7 +4,7 @@ interface IDateProvider {
   hourDiff(start_date: Date, end_date: Date): number;
   addHours(date: Date, hours?: number): Date;
   daysDiff(start_date: Date, end_date: Date): number;
-  addDays(date: Date, hours?: number): Date;
+  addDays(date: Date, days?: number): Date;
 }
 
 export { IDateProvider };
