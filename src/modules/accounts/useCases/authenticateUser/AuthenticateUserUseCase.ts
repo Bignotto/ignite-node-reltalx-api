@@ -2,7 +2,10 @@ import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
 
+import auth from "@config/auth";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
+import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
 import { AppError } from "@shared/errors/AppError";
 
 interface IRequest {
@@ -16,13 +19,20 @@ interface IResponse {
     email: string;
   };
   token: string;
+  refresh_token: string;
 }
 
 @injectable()
 class AuthenticateUserUseCase {
   constructor(
     @inject("UsersRepository")
-    private userRepository: IUsersRepository
+    private userRepository: IUsersRepository,
+
+    @inject("UsersTokensRepository")
+    private userTokenRepository: IUsersTokensRepository,
+
+    @inject("DateProvider")
+    private dateProvider: IDateProvider
   ) {}
 
   async execute({ email, password }: IRequest): Promise<IResponse> {
@@ -34,9 +44,20 @@ class AuthenticateUserUseCase {
 
     if (!passwordMatch) throw new AppError("Wrong credentials.", 401);
 
-    const token = sign({}, "389065117dba07a3fee26dbe2db07b40", {
+    const token = sign({}, auth.secret, {
       subject: user.id,
-      expiresIn: "1d",
+      expiresIn: auth.expires_in,
+    });
+
+    const refresh_token = sign({ email }, auth.secret_refresh_token, {
+      subject: user.id,
+      expiresIn: auth.expires_in_refresh_token,
+    });
+
+    await this.userTokenRepository.create({
+      user_id: user.id,
+      refresh_token,
+      expires_date: this.dateProvider.addDays(this.dateProvider.now(), 30),
     });
 
     return {
@@ -45,6 +66,7 @@ class AuthenticateUserUseCase {
         email: user.email,
       },
       token,
+      refresh_token,
     };
   }
 }
