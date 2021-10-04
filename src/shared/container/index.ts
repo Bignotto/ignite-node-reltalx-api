@@ -38,13 +38,12 @@ container.registerSingleton<ICarsImagesRepository>(
   "CarsImagesRepository",
   CarsImagesRepository
 );
+container.registerSingleton<IUsersTokensRepository>(
+  "UsersTokensRepository",
+  UsersTokensRepository
+);
 
 container.registerSingleton<IRentalRepository>(
   "RentalsRepository",
   RentalsRepository
-);
-
-container.registerSingleton<IUsersTokensRepository>(
-  "UsersTokensRepository",
-  UsersTokensRepository
 );
