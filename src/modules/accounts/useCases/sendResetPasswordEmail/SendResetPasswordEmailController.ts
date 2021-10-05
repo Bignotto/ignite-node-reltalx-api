@@ -5,13 +5,13 @@ import { SendResetPasswordEmailUseCase } from "./SendResetPasswordEmailUseCase";
 
 class SendResetPasswordController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const email = request.body;
+    const { email } = request.body;
 
     const sendResetPassword = container.resolve(SendResetPasswordEmailUseCase);
 
     await sendResetPassword.execute(email);
 
-    return response.status(201);
+    return response.status(201).send();
   }
 }
 
