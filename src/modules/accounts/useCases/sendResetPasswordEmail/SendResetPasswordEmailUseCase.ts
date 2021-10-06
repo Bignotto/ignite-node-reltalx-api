@@ -1,3 +1,4 @@
+import path from "path";
 import { inject, injectable } from "tsyringe";
 import { v4 as uuidv4 } from "uuid";
 
@@ -27,6 +28,15 @@ class SendResetPasswordEmailUseCase {
     const user = await this.usersRepository.findByEmail(email);
     if (!user) throw new AppError("Password reset: User not found.");
 
+    const templatePath = path.resolve(
+      __dirname,
+      "..",
+      "..",
+      "views",
+      "email",
+      "ResetPassword.hbs"
+    );
+
     const token = uuidv4();
 
     const expires = this.dateProvider.addHours(this.dateProvider.now(), 3);
@@ -37,11 +47,17 @@ class SendResetPasswordEmailUseCase {
       user_id: user.id,
     });
 
+    const variable = {
+      name: user.name,
+      link: `${process.env.RESET_PASSWORD_URL}${token}`,
+    };
+
     await this.mailProvider.sendMail(
       user.email,
       "noreply@rentalx.com",
       "Your recovery link",
-      `Your link is here: ${token}`
+      variable,
+      templatePath
     );
   }
 }

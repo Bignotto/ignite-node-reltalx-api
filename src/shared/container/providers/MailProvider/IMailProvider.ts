@@ -3,7 +3,8 @@ interface IMailProvider {
     to: string,
     from: string,
     subject: string,
-    body: string
+    variables: unknown,
+    path: string
   ): Promise<void>;
 }
 
