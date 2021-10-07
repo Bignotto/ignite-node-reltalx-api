@@ -5,6 +5,7 @@ interface IDateProvider {
   addHours(date: Date, hours?: number): Date;
   daysDiff(start_date: Date, end_date: Date): number;
   addDays(date: Date, days?: number): Date;
+  isExpired(date: Date): boolean;
 }
 
 export { IDateProvider };

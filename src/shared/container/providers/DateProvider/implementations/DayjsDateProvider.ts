@@ -29,6 +29,10 @@ class DayjsDateProvider implements IDateProvider {
   addDays(date: Date, days = 1): Date {
     return dayjs(date).add(days, "days").toDate();
   }
+
+  isExpired(date: Date): boolean {
+    return dayjs(date).isBefore(new Date(), "h");
+  }
 }
 
 export { DayjsDateProvider };

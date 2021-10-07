@@ -24,4 +24,12 @@ describe("Date Provider", () => {
     expect(dateProvider.daysDiff(start_time, end_time)).toBe(5);
     expect(dateProvider.daysDiff(start_time, end_time_2)).toBe(7);
   });
+
+  it("should tell if date is expired correctly", () => {
+    const past_date = new Date(2021, 1, 20, 10, 15);
+    const future_date = new Date(2022, 1, 25, 13, 15);
+
+    expect(dateProvider.isExpired(past_date)).toBeTruthy();
+    expect(dateProvider.isExpired(future_date)).toBeFalsy();
+  });
 });
