@@ -10,6 +10,7 @@ import swaggerFile from "../../../swagger.json";
 import { authRoutes } from "./routes/authentication.routes";
 import { carRoutes } from "./routes/cars.routes";
 import { categoryRoutes } from "./routes/categories.routes";
+import { passwordRoutes } from "./routes/password.routes";
 import { rentalsRoutes } from "./routes/rental.routes";
 import { specificationRoutes } from "./routes/specifications.routes";
 import { usersRoutes } from "./routes/users.routes";
@@ -29,6 +30,7 @@ app.use(categoryRoutes);
 app.use(specificationRoutes);
 app.use(carRoutes);
 app.use(rentalsRoutes);
+app.use(passwordRoutes);
 
 app.get("/", (request, response) =>
   response.status(200).json({
